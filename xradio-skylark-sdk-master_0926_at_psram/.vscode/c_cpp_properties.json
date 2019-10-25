@@ -1,0 +1,29 @@
+{
+    "configurations": [
+
+        {
+            "name": "GNU_ARM",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:\\sotfware\\cygwin\\home\\Administrator\\tools\\gcc-arm-none-eabi-4_9-2015q2\\arm-none-eabi\\include",
+                "D:\\sotfware\\cygwin\\home\\Administrator\\tools\\gcc-arm-none-eabi-4_9-2015q2\\lib\\gcc\\arm-none-eabi\\4.9.3\\include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "gcc-x86",
+            "cStandard": "c99",
+            "cppStandard": "c++11",
+            "compilerArgs": [],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}
