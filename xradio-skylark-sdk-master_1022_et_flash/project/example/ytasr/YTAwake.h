@@ -15,7 +15,7 @@ typedef struct tagAwakeCB
 {
 	void (*local_vad_start)();
 	void (*local_vad_end)();
-	void (*local_awake)();
+	void (*local_awake)(int);
 	void (*local_not_awake)();
 	void (*cloud_vad_start)();
 	void (*cloud_vad_end)();

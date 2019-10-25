@@ -41,12 +41,13 @@ static void * pRingBuf = NULL;
 static void GetResult()
 {
 #if 1
+	memset(pOriginalWordIndex,-1,1*sizeof(int));
 	ytv_asr_tiny_notify_data_end(pEngine);			
 	ytv_asr_tiny_get_result(pEngine,nMaxCmd, &nResultNumber,pOriginalWordIndex);
 	if(nResultNumber)szResultUTF8 = ytv_asr_tiny_get_one_command_gbk(pEngine,pOriginalWordIndex[0]);	
 	YT_LOGI("Result:%s",szResultUTF8?szResultUTF8:"no result!!!");	
 	ytv_asr_tiny_reset_engine(pEngine); 			
-	szResultUTF8 = NULL;
+	szResultUTF8 = NULL;	
 #endif	
 }
 
@@ -160,7 +161,7 @@ static void RunOneTask(void *arg)
 						nGetResultStopTime = xTaskGetTickCount();
 						YT_LOGI("GetResult time = %d",nGetResultStopTime - nGetResultStartTime);
 						if(pAwakeCB){
-							if(nResultNumber){YTAwake_SetAwakeFlag(1);pAwakeCB->local_awake();}
+							if(nResultNumber){YTAwake_SetAwakeFlag(1);pAwakeCB->local_awake(pOriginalWordIndex[0]);}
 							else {YTAwake_SetAwakeFlag(0);pAwakeCB->local_not_awake();}
 						}				
 						bVadEnd = 0;
@@ -184,7 +185,7 @@ static void RunOneTask(void *arg)
 					nGetResultStopTime = xTaskGetTickCount();
 					YT_LOGI("GetResult time = %d",nGetResultStopTime - nGetResultStartTime);
 					if(pAwakeCB){
-						if(nResultNumber){YTAwake_SetAwakeFlag(1);pAwakeCB->local_awake();}
+						if(nResultNumber){YTAwake_SetAwakeFlag(1);pAwakeCB->local_awake(pOriginalWordIndex[0]);}
 						else {YTAwake_SetAwakeFlag(0);pAwakeCB->local_not_awake();}
 					}				
 					bVadEnd = 0;

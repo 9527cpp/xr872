@@ -12,7 +12,9 @@
 #include <string.h>
 #include "YTLog.h"
 
+#include "serial.h"
 
+#define SERIAL_UART_ID   UART2_ID 
 
 #define NEED_PRINT_TIME_INFO 1
 
@@ -58,7 +60,7 @@ void local_vad_end()
 	//LOGI("local_vad_end");	
 }
  
-void local_awake()
+void local_awake(int index)
 {
 	YT_LOGI("local_awake");
 #if NEED_PRINT_TIME_INFO		// 打印接下来 2s 的cpu情况		
@@ -72,6 +74,12 @@ void local_awake()
 	/*add your code here*/
 	//*YT,CMD,1#
 	//printf();  or serial().wirte();
+
+	char cmd[20]={0};
+	sprintf(cmd,"YT,CMD,%d#",index);
+	//serial().wirte(cmd);
+	serial_write(cmd,strlen(cmd));
+	
 	in_session = 0;
 }
  
@@ -502,6 +510,10 @@ void YTAwakeRunTestRecorder()
 	void *thTestRecorder;
 	YT_LOGI("YTAwakeRunTestRecorder");
 	YTAwake_Init();
+	  
+	serial_init(SERIAL_UART_ID, 115200, UART_DATA_BITS_8, UART_PARITY_NONE, UART_STOP_BITS_1, 1);
+	serial_start();
+	
 	BaseType_t x = xTaskCreate(YTAwakeTestRecorderTask,"YTAwakeTestRecorderTask",1024*4,NULL,1,&thTestRecorder);
 	if (x != pdPASS) {YT_LOGE("create task: failed");}
 	else {YT_LOGI("create task: succeeded");}	
